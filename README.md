@@ -1,2 +1,3 @@
-twist
-=====
+# Twist
+
+Twitter Streaming API Server.
