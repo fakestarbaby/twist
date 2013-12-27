@@ -7,6 +7,7 @@ GEM
       simple_oauth (~> 0.2)
     eventmachine (1.0.3)
     http_parser.rb (0.6.0)
+    json (1.8.1)
     simple_oauth (0.2.0)
 
 PLATFORMS
@@ -14,3 +15,4 @@ PLATFORMS
 
 DEPENDENCIES
   em-twitter
+  json
