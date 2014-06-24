@@ -33,6 +33,6 @@ EM.run do
 
     status_url = "https://twitter.com/#{result['user']['screen_name']}/status/#{result['id']}"
     hipchat_client[ENV['HIPCHAT_ROOM_NAME']].send(ENV['HIPCHAT_SENDER_NAME'], status_url, message_format: 'text')
-    Idobata::Message.create(source: status_url, format: :html)
+    Idobata::Message.create(source: "<p><span><img src=#{result['user']['profile_image_url']} width='16' height='16' /></span> <a href=#{status_url}>@#{result['user']['screen_name']}</a></p><blockquote>#{result['text']}</blockquote>", format: :html)
   end
 end
