@@ -19,8 +19,36 @@ options = {
   }
 }
 
-hubot_endpoint = ENV['HUBOT_ENDPOINT']
-hubot_room = ENV['HUBOT_ROOM']
+HUBOT_PARAMS = {
+  endpoint: ENV['HUBOT_ENDPOINT'],
+  room: ENV['HUBOT_ROOM'],
+  basic_auth_user: ENV['HUBOT_BASIC_AUTH_USER'],
+  basic_auth_pass: ENV['HUBOT_BASIC_AUTH_PASS']
+}
+
+def build_params(message)
+  params = {
+    body: {
+      room: HUBOT_PARAMS[:room],
+      message: message
+    }
+  }
+  if HUBOT_PARAMS[:basic_auth_user] && HUBOT_PARAMS[:basic_auth_pass]
+    params[:basic_auth] = {
+      username: HUBOT_PARAMS[:basic_auth_user],
+      password: HUBOT_PARAMS[:basic_auth_pass]
+    }
+  end
+  params
+end
+
+def build_message(payload)
+  user_image = payload['user']['profile_image_url_https']
+  user_screen_name = payload['user']['screen_name']
+  status = payload['text']
+  status_url = "https://twitter.com/#{payload['user']['screen_name']}/status/#{payload['id_str']}"
+  [user_image, user_screen_name, status, status_url].join("\n")
+end
 
 EM.run do
   twitter_client = EM::Twitter::Client.connect(options)
@@ -31,15 +59,8 @@ EM.run do
     next if track_keywords.include?(result['user']['screen_name'])
 
     message = build_message(result)
+    params = build_params(message)
 
-    HTTParty.post(hubot_endpoint, room: hubot_room, message: message)
+    HTTParty.post(HUBOT_PARAMS[:endpoint], params)
   end
-end
-
-def build_message(payload)
-  user_image = payload['user']['profile_image_url_https']
-  user_screen_name = payload['user']['screen_name']
-  status = payload['text']
-  status_url = "https://twitter.com/#{payload['user']['screen_name']}/status/#{payload['id_str']}"
-  [user_image, user_screen_name, status, status_url].join("\n")
 end
