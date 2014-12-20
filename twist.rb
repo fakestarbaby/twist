@@ -32,7 +32,7 @@ EM.run do
 
     message = build_message(result)
 
-    HTTParty.post(hubot_endpoint, {room: hubot_room, message: message})
+    HTTParty.post(hubot_endpoint, room: hubot_room, message: message)
   end
 end
 
