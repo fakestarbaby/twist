@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.1
+before_install:
+  - gem install rubocop
+script:
+  rubocop --fail-level=W
+notifications:
+  email:
+    - ogataken@gmail.com
+branches:
+  only:
+    - master
