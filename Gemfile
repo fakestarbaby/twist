@@ -6,3 +6,7 @@ gem 'em-twitter'
 gem 'foreman'
 gem 'json'
 gem 'httparty'
+
+group :development do
+  gem 'pry', group: :test
+end
