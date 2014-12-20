@@ -21,7 +21,5 @@ $ foreman start
 ```bash
 $ heroku create twist
 $ git push heroku master
-$ heroku plugins:install git://github.com/ddollar/heroku-config.git
-$ heroku config:push
-$ heroku scale twist=1
+$ heroku scale worker=1
 ```
