@@ -1,3 +1,4 @@
 /.bundle
 /.env
 /vendor/bundle
+.ruby-version
