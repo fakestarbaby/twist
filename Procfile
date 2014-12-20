@@ -1,1 +1,1 @@
-twist: bundle exec ruby twist.rb
+worker: bundle exec ruby twist.rb
