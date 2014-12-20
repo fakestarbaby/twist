@@ -1,9 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
+ruby '2.1.5'
 
 gem 'em-twitter'
 gem 'foreman'
 gem 'json'
-gem 'hipchat'
-gem 'idobata'
+gem 'httparty'
+
+group :development do
+  gem 'pry', group: :test
+end
