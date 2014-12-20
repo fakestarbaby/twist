@@ -30,12 +30,16 @@ EM.run do
     next if ignore_users.include?(result['user']['screen_name'])
     next if track_keywords.include?(result['user']['screen_name'])
 
-    user_image = result['user']['profile_image_url_https']
-    user_screen_name = result['user']['screen_name']
-    status = result['text']
-    status_url = "https://twitter.com/#{result['user']['screen_name']}/status/#{result['id_str']}"
-    message = [user_image, user_screen_name, status, status_url].join("\n")
+    message = build_message(result)
 
     HTTParty.post(hubot_endpoint, {room: hubot_room, message: message})
   end
+end
+
+def build_message(payload)
+  user_image = payload['user']['profile_image_url_https']
+  user_screen_name = payload['user']['screen_name']
+  status = payload['text']
+  status_url = "https://twitter.com/#{payload['user']['screen_name']}/status/#{payload['id_str']}"
+  [user_image, user_screen_name, status, status_url].join("\n")
 end
